@@ -1,0 +1,41 @@
+== 0.2.1 - 9-Aug-2009
+* License changed to Artistic 2.0.
+* Test and example files renamed.
+* Gemspec updates, including license and description.
+* Updates to the Rakefile, including the removal of old C rake tasks, as
+  well as the addition of tasks to run the example programs.
+
+== 0.2.0 - 28-May-2008
+* Now pure Ruby.
+* Major interface change. Pipe::Server.new and Pipe::Client.new replace the
+  Pipe.new_server and Pipe.new_client methods, respectively.
+* An optional 3rd argument, the open mode, is now accepted which allows finer
+  control over how pipes are created.
+* Several pipe mode and open mode constants were added.
+* The asynchronous pipe server actually works now.
+* Added the Pipe#name method.
+* Added the Pipe#asynchronous? method.
+* Added the Pipe#size method as an alias for Pipe#length.
+* Added a Rakefile with tasks for testing and installation.
+* Added a gemspec and uploaded a gem file to RubyForge.
+* Merged the doc files into the README and/or replaced them with inlined
+  comments that are RDoc friendly.
+
+== 0.1.2 - 1-Mar-2005
+* Moved the 'examples' directory to the toplevel directory.
+* Made the CHANGES and README files rdoc friendly.
+
+== 0.1.1 - 25-Aug-2004
+* Added many more tests to the test suite.
+* Moved the example programs to doc/examples.
+* Fixed minor bugs in the asynchronous client and server test programs.
+* Removed the pipe.html file.  You can generate your own html documentation
+  using rd2 on the pipe.rd file.
+
+== 0.1.0 - 13-Feb-2004
+* Asynchronous support added (thanks Park Heesob)
+* Sample test programs added.  See files under 'test'.
+* Documentation updates.
+
+== 0.0.1 - 20-Nov-2003
+* Initial release

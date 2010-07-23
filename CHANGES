@@ -1,3 +1,8 @@
+== 0.2.2 - ???
+* Added test-unit 2.x as a development dependency.
+* Refactored some tests to use features of test-unit 2.x.
+* Refactored the Rakefile.
+
 == 0.2.1 - 9-Aug-2009
 * License changed to Artistic 2.0.
 * Test and example files renamed.

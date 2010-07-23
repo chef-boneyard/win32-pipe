@@ -20,7 +20,7 @@ module Win32
       class Error < StandardError; end
       
       # The version of this library
-      VERSION = '0.2.1'
+      VERSION = '0.2.2'
 
       PIPE_BUFFER_SIZE = 512 #:nodoc:
       PIPE_TIMEOUT = 5000    #:nodoc:

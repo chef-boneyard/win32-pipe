@@ -15,7 +15,7 @@ class TC_Win32_Pipe_Server < Test::Unit::TestCase
 
    def test_constructor_basic
       assert_respond_to(Pipe::Server, :new)
-      assert_nothing_raised{ Pipe::Server.new('foo') }
+      assert_nothing_raised{ @pipe = Pipe::Server.new('foo') }
    end
 
    def test_connect

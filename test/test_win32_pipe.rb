@@ -4,10 +4,8 @@
 # Test suite for the win32-pipe library. This test suite should be run
 # via the 'rake test' task.
 ##########################################################################
-require 'rubygems'
-gem 'test-unit'
+require 'test-unit'
 require 'test/unit'
-
 require 'win32/pipe'
 include Win32
 
@@ -15,89 +13,128 @@ class TC_Win32_Pipe < Test::Unit::TestCase
   def setup
     @pipe = Pipe.new('foo')
   end
-   
-  def test_version
-    assert_equal('0.2.2', Pipe::VERSION)
+
+  test "version is set to expected value" do
+    assert_equal('0.3.0', Pipe::VERSION)
   end
 
-  def test_name
+  test "name method basic functionality" do
     assert_respond_to(@pipe, :name)
     assert_nothing_raised{ @pipe.name }
+    assert_kind_of(String, @pipe.name)
+  end
+
+  test "name returns expected string" do
     assert_equal("\\\\.\\pipe\\foo", @pipe.name)
   end
 
-  def test_pipe_mode
+  test "mode method basic functionality" do
     assert_respond_to(@pipe, :pipe_mode)
     assert_nothing_raised{ @pipe.pipe_mode }
+    assert_kind_of(Fixnum, @pipe.pipe_mode)
+  end
+
+  test "mode method returns expected value" do
     assert_equal(Pipe::DEFAULT_PIPE_MODE, @pipe.pipe_mode)
   end
 
-  def test_open_mode
+  test "open_mode basic functionality" do
     assert_respond_to(@pipe, :open_mode)
     assert_nothing_raised{ @pipe.open_mode }
+    assert_kind_of(Numeric, @pipe.open_mode)
+  end
+
+  test "open_mode returns the expected value" do
     assert_equal(Pipe::DEFAULT_OPEN_MODE, @pipe.open_mode)
   end
- 
-  def test_buffer
+
+  test "buffer method basic functionality" do
     assert_respond_to(@pipe, :buffer)
     assert_nothing_raised{ @pipe.buffer }
   end
- 
-  def test_size
+
+  test "size basic functionality" do
     assert_respond_to(@pipe, :size)
     assert_nothing_raised{ @pipe.size }
   end
- 
-  def test_length_alias
+
+  test "length is an alias for size" do
     assert_respond_to(@pipe, :length)
-    assert_true(@pipe.method(:length) == @pipe.method(:size))
     assert_alias_method(@pipe, :length, :size)
   end
- 
-  def test_pending
+
+  test "pending method basic functionality" do
     assert_respond_to(@pipe, :pending?)
     assert_nothing_raised{ @pipe.pending? }
+    assert_boolean(@pipe.pending?)
+  end
+
+  test "pending method defaults to false" do
     assert_false(@pipe.pending?)
   end
 
-  def test_asynchronous
+  test "asynchronous method basic functionality" do
     assert_respond_to(@pipe, :asynchronous?)
     assert_nothing_raised{ @pipe.asynchronous? }
+    assert_boolean(@pipe.asynchronous?)
+  end
+
+  test "asynchronous method defaults to false" do
     assert_false(@pipe.asynchronous?)
   end
- 
-  def test_read
+
+  test "read method basic functionality" do
     assert_respond_to(@pipe, :read)
-    assert_raises(Pipe::Error){ @pipe.read } # Nothing to read
   end
- 
-  def test_transferred
+
+  test "read method raises an error if there's nothing to read" do
+    assert_raises(SystemCallError){ @pipe.read }
+  end
+
+  test "transfered method basic functionality" do
     assert_respond_to(@pipe, :transferred)
     assert_nothing_raised{ @pipe.transferred }
   end
- 
-  def test_wait
+
+  test "wait method basic functionality" do
     assert_respond_to(@pipe, :wait)
-    assert_raises(Pipe::Error){ @pipe.wait } # Can't wait in blocking mode
-  end
- 
-  def test_write
-    assert_respond_to(@pipe, :write)
-    assert_raises(ArgumentError){ @pipe.write }      # Must have 1 argument
-    assert_raises(Pipe::Error){ @pipe.write("foo") } # Nothing to write to
   end
 
-  def test_disconnect
+  test "wait method raises an error in blocking mode" do
+    assert_raises(SystemCallError){ @pipe.wait }
+  end
+
+  test "write method basic functionality" do
+    assert_respond_to(@pipe, :write)
+  end
+
+  test "write method requires one argument" do
+    assert_raises(ArgumentError){ @pipe.write }
+  end
+
+  test "write method raises an error if there's nothing to write to" do
+    assert_raises(SystemCallError){ @pipe.write("foo") }
+  end
+
+  test "disconnect method basic functionality" do
     assert_respond_to(@pipe, :disconnect)
     assert_nothing_raised{ @pipe.disconnect }
   end
 
-  def test_close
+  test "calling the disconnect method multiple times has no effect" do
+    assert_nothing_raised{ @pipe.disconnect; @pipe.disconnect }
+  end
+
+  test "close method basic functionality" do
     assert_respond_to(@pipe, :close)
     assert_nothing_raised{ @pipe.close }
   end
- 
-  def test_pipe_mode_constants
+
+  test "calling close multiple times has no effect" do
+    assert_nothing_raised{ @pipe.close; @pipe.close }
+  end
+
+  test "pipe_mode constants" do
     assert_not_nil(Pipe::WAIT)
     assert_not_nil(Pipe::NOWAIT)
     assert_not_nil(Pipe::TYPE_BYTE)
@@ -106,7 +143,7 @@ class TC_Win32_Pipe < Test::Unit::TestCase
     assert_not_nil(Pipe::READMODE_MESSAGE)
   end
 
-  def test_open_mode_constants
+  test "open_mode constants" do
     assert_not_nil(Pipe::ACCESS_DUPLEX)
     assert_not_nil(Pipe::ACCESS_INBOUND)
     assert_not_nil(Pipe::ACCESS_OUTBOUND)
@@ -115,12 +152,12 @@ class TC_Win32_Pipe < Test::Unit::TestCase
     assert_not_nil(Pipe::OVERLAPPED)
   end
 
-  def test_other_constants
+  test "other contants" do
     assert_not_nil(Pipe::INFINITE)
   end
- 
+
   def teardown
-    @pipe.close
+    @pipe.close if @pipe
     @pipe = nil
   end
 end

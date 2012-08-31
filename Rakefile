@@ -40,9 +40,29 @@ namespace :example do
   end
 end
 
-Rake::TestTask.new do |test|
-  test.warning = true
-  test.verbose = true
+namespace :test do
+  Rake::TestTask.new(:base) do |test|
+    test.warning = true
+    test.verbose = true
+    test.test_files = FileList['test\test_win32_pipe.rb']
+  end
+
+  Rake::TestTask.new(:client) do |test|
+    test.warning = true
+    test.verbose = true
+    test.test_files = FileList['test\test_win32_pipe_client.rb']
+  end
+
+  Rake::TestTask.new(:server) do |test|
+    test.warning = true
+    test.verbose = true
+    test.test_files = FileList['test\test_win32_pipe_server.rb']
+  end
+
+  Rake::TestTask.new(:all) do |test|
+    test.warning = true
+    test.verbose = true
+  end
 end
 
-task :default => :test
+task :default => 'test:all'

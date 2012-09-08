@@ -29,7 +29,7 @@ module Win32
     #
     def initialize(name, pipe_mode = DEFAULT_PIPE_MODE, open_mode = DEFAULT_OPEN_MODE)
       super(name, pipe_mode, open_mode)
-         
+
       @pipe = CreateFile(
         @name,
         GENERIC_READ | GENERIC_WRITE,
@@ -37,21 +37,21 @@ module Win32
         nil,
         OPEN_EXISTING,
         @open_mode,
-        nil 
+        0
       )
 
       error = GetLastError()
-         
+
       if error == ERROR_PIPE_BUSY
         unless WaitNamedPipe(@name, NMPWAIT_WAIT_FOREVER)
-          raise Error, get_last_error
+          raise SystemCallError.new("WaitNamedPipe", FFI.errno)
         end
       end
-         
+
       if @pipe == INVALID_HANDLE_VALUE
-        raise Error, get_last_error
+        raise SystemCallError.new("CreateFile", error)
       end
-         
+
       if block_given?
         begin
           yield self

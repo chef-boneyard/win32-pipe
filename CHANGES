@@ -1,3 +1,8 @@
+== 0.3.0 - 8-Sep-2012
+* Converted to FFI. Now works with JRuby, too.
+* Native errors are now raised as SystemCallErrors.
+* Test updates, gemspec dependency updates, etc.
+
 == 0.2.2 - 19-Mar-2012
 * Added test-unit 2.x as a development dependency.
 * Refactored some tests to use features of test-unit 2.x.

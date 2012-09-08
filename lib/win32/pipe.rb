@@ -10,6 +10,9 @@ module Win32
     include Windows::Constants
     include Windows::Functions
 
+    # Error raised when anything other than a SystemCallError occurs.
+    class Error < StandardError; end
+
     # The version of this library
     VERSION = '0.3.0'
 
@@ -206,7 +209,7 @@ module Win32
     #
     def wait(max_time = nil)
       unless @asynchronous
-        raise RuntimeError, 'cannot wait in synchronous (blocking) mode'
+        raise Error, 'cannot wait in synchronous (blocking) mode'
       end
 
       max_time = max_time ? max_time * 1000 : INFINITE

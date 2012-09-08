@@ -38,7 +38,9 @@ class TC_Win32_Pipe_Client < Test::Unit::TestCase
   end
 
   test "an error is raised if the named pipe cannot be found" do
-    assert_raise(Errno::ENOENT){ Win32::Pipe::Client.new('bogus') }
+    assert_raise(SystemCallError, Errno::ENOENT){
+      Win32::Pipe::Client.new('bogus')
+    }
   end
 
   def teardown

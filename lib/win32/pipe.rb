@@ -199,7 +199,7 @@ module Win32
 
         return false
       else
-        unless WriteFile(@pipe, @buffer, @buffer.size, bytes, 0)
+        unless WriteFile(@pipe, @buffer, @buffer.size, bytes, nil)
           raise SystemCallError.new("WriteFile", FFI.errno)
         end
 

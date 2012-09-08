@@ -10,6 +10,8 @@
 * lib/win32/pipe.rb
 * lib/win32/pipe/client.rb
 * lib/win32/pipe/server.rb
+* lib/win32/pipe/windows/constants.rb
+* lib/win32/pipe/windows/functions.rb
 * test/test_win32_pipe.rb
 * test/test_win32_pipe_client.rb
 * test/test_win32_pipe_server.rb

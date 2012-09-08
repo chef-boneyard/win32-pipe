@@ -142,6 +142,8 @@ module Win32
       bytes = FFI::MemoryPointer.new(:ulong)
       @buffer = 0.chr * PIPE_BUFFER_SIZE
 
+      raise Error, "no pipe created" unless @pipe
+
       if @asynchronous
         bool = ReadFile(@pipe, @buffer, @buffer.size, bytes, @overlapped)
         error = GetLastError()
@@ -176,6 +178,8 @@ module Win32
       @buffer = data
       @size   = data.size
       bytes   = FFI::MemoryPointer.new(:ulong)
+
+      raise Error, "no pipe created" unless @pipe
 
       if @asynchronous
         bool = WriteFile(@pipe, @buffer, @buffer.size, bytes, @overlapped)

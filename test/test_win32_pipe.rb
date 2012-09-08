@@ -5,7 +5,6 @@
 # via the 'rake test' task.
 ##########################################################################
 require 'test-unit'
-require 'test/unit'
 require 'win32/pipe'
 include Win32
 
@@ -88,7 +87,7 @@ class TC_Win32_Pipe < Test::Unit::TestCase
   end
 
   test "read method raises an error if there's nothing to read" do
-    assert_raises(SystemCallError){ @pipe.read }
+    assert_raises(Pipe::Error){ @pipe.read }
   end
 
   test "transfered method basic functionality" do
@@ -101,7 +100,7 @@ class TC_Win32_Pipe < Test::Unit::TestCase
   end
 
   test "wait method raises an error in blocking mode" do
-    assert_raises(SystemCallError){ @pipe.wait }
+    assert_raises(Pipe::Error){ @pipe.wait }
   end
 
   test "write method basic functionality" do
@@ -113,7 +112,7 @@ class TC_Win32_Pipe < Test::Unit::TestCase
   end
 
   test "write method raises an error if there's nothing to write to" do
-    assert_raises(SystemCallError){ @pipe.write("foo") }
+    assert_raises(Pipe::Error){ @pipe.write("foo") }
   end
 
   test "disconnect method basic functionality" do

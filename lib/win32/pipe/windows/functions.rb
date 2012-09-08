@@ -23,7 +23,7 @@ module Windows
     attach_pfunc :FlushFileBuffers, [:ulong], :bool
     attach_pfunc :GetLastError, [], :ulong
     attach_pfunc :GetOverlappedResult, [:ulong, :pointer, :pointer, :bool], :bool
-    attach_pfunc :ReadFile, [:ulong, :pointer, :ulong, :pointer, :pointer], :bool
+    attach_pfunc :ReadFile, [:ulong, :buffer_out, :ulong, :pointer, :pointer], :bool
     attach_pfunc :WaitForSingleObject, [:ulong, :ulong], :ulong
     attach_pfunc :WaitNamedPipe, :WaitNamedPipeA, [:string, :ulong], :bool
     attach_pfunc :WriteFile, [:ulong, :buffer_in, :ulong, :pointer, :pointer], :bool

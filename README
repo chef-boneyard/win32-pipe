@@ -1,55 +1,52 @@
 == Description
-   A Ruby interface for named pipes on Windows.
+  A Ruby interface for named pipes on Windows.
 
 == Prerequisites
-* windows-pr 0.8.5 or later
+  ffi
 
 == Installation
-=== Gem Installation
-   gem install win32-pipe
-=== Local
-   rake install
+  gem install win32-pipe
 
 == Synopsis
-   require 'win32/pipe'
-   include Win32
+  require 'win32/pipe'
+  include Win32
     
-   # In server.rb
-   pipe_server = Pipe::Server.new("foo_pipe")
-   pipe_server.connect
-   data = pipe_server.read
-   puts "Got #{data} from client"
-   pipe_server.close
-    
-   # In client.rb (run from a different shell)
-   pipe_client = Pipe::Client.new("foo_pipe")
-   pipe_client.write("Hello World")
-   pipe_client.close
+  # In server.rb
+  pipe_server = Pipe::Server.new("foo_pipe")
+  pipe_server.connect
+  data = pipe_server.read
+  puts "Got #{data} from client"
+  pipe_server.close
+   
+  # In client.rb (run from a different shell)
+  pipe_client = Pipe::Client.new("foo_pipe")
+  pipe_client.write("Hello World")
+  pipe_client.close
 
 == What's a named pipe?
-   A pipe with a name - literally. In practice, it will feel more like a cross
-   between a socket and a pipe. At least, it does to me.
+  A pipe with a name - literally. In practice, it will feel more like a cross
+  between a socket and a pipe. At least, it does to me.
 
 == What good is it?
-   My hope is that it can be used in certain circumstances where a fork might
-   be desirable, but which is not possible on Windows. It could also be handy
-   for the traditional "piping data to a server" usage. And if you come up
-   with anything cool, please let us all know!
+  My hope is that it can be used in certain circumstances where a fork might
+  be desirable, but which is not possible on Windows. It could also be handy
+  for the traditional "piping data to a server" usage. And if you come up
+  with anything cool, please let us all know!
 
 == Future Plans
-   Add transactions
+  Add transactions
 
 == License
-   Artistic
+  Artistic 2.0
 
 == Warranty
-   This package is provided "as is" and without any express or
-   implied warranties, including, without limitation, the implied
-   warranties of merchantability and fitness for a particular purpose.
+  This package is provided "as is" and without any express or
+  implied warranties, including, without limitation, the implied
+  warranties of merchantability and fitness for a particular purpose.
 
 == Copyright
-   (C) 2003-2009, Daniel J. Berger, All Rights Reserved.
+  (C) 2003-2012, Daniel J. Berger, All Rights Reserved.
 
 == Authors
-   Daniel Berger
-   Park Heesob
+  Daniel Berger
+  Park Heesob

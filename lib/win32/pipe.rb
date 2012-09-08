@@ -247,5 +247,5 @@ module Win32
   end
 end
 
-require 'win32/pipe/server'
-require 'win32/pipe/client'
+require File.join(File.dirname(__FILE__), 'pipe', 'server')
+require File.join(File.dirname(__FILE__), 'pipe', 'client')

@@ -2,11 +2,11 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
 	spec.name       = 'win32-pipe'
-	spec.version    = '0.3.0'
+	spec.version    = '0.3.1'
 	spec.author     = 'Daniel J. Berger'
   spec.license    = 'Artistic 2.0'
 	spec.email      = 'djberg96@gmail.com'
-	spec.homepage   = 'http://www.rubyforge.org/projects/win32utils'
+	spec.homepage   = 'https://github.com/djberg96/win32-pipe'
 	spec.summary    = 'An interface for named pipes on MS Windows' 
 	spec.test_files = Dir['test/test_*.rb']
   spec.files      = Dir['**/*'].reject{ |f| f.include?('git') }

@@ -3,6 +3,12 @@ require 'ffi'
 module Windows
   module Functions
     extend FFI::Library
+
+    typedef :ulong, :dword
+    typedef :uintptr_t, :handle
+    typedef :pointer, :ptr
+    typedef :string, :str
+
     ffi_lib :kernel32
 
     module FFI::Library
@@ -13,19 +19,19 @@ module Windows
       end
     end
 
-    attach_pfunc :CloseHandle, [:ulong], :bool
-    attach_pfunc :ConnectNamedPipe, [:ulong, :pointer], :bool
-    attach_pfunc :CreateEvent, :CreateEventA, [:pointer, :bool, :bool, :string], :ulong
-    attach_pfunc :CreateFile, :CreateFileA, [:string, :ulong, :ulong, :pointer, :ulong, :ulong, :ulong], :ulong
-    attach_pfunc :CreateNamedPipe, :CreateNamedPipeA, [:string, :ulong, :ulong, :ulong, :ulong, :ulong, :ulong, :pointer], :ulong
-    attach_pfunc :CreatePipe, [:pointer, :pointer, :pointer, :ulong], :bool
-    attach_pfunc :DisconnectNamedPipe, [:ulong], :bool
-    attach_pfunc :FlushFileBuffers, [:ulong], :bool
-    attach_pfunc :GetLastError, [], :ulong
-    attach_pfunc :GetOverlappedResult, [:ulong, :pointer, :pointer, :bool], :bool
-    attach_pfunc :ReadFile, [:ulong, :buffer_out, :ulong, :pointer, :pointer], :bool
-    attach_pfunc :WaitForSingleObject, [:ulong, :ulong], :ulong
-    attach_pfunc :WaitNamedPipe, :WaitNamedPipeA, [:string, :ulong], :bool
-    attach_pfunc :WriteFile, [:ulong, :buffer_in, :ulong, :pointer, :pointer], :bool
+    attach_pfunc :CloseHandle, [:handle], :bool
+    attach_pfunc :ConnectNamedPipe, [:handle, :ptr], :bool
+    attach_pfunc :CreateEvent, :CreateEventA, [:ptr, :bool, :bool, :str], :handle
+    attach_pfunc :CreateFile, :CreateFileA, [:str, :dword, :dword, :ptr, :dword, :dword, :handle], :handle
+    attach_pfunc :CreateNamedPipe, :CreateNamedPipeA, [:str, :dword, :dword, :dword, :dword, :dword, :dword, :ptr], :handle
+    attach_pfunc :CreatePipe, [:ptr, :ptr, :ptr, :dword], :bool
+    attach_pfunc :DisconnectNamedPipe, [:handle], :bool
+    attach_pfunc :FlushFileBuffers, [:handle], :bool
+    attach_pfunc :GetLastError, [], :dword
+    attach_pfunc :GetOverlappedResult, [:handle, :ptr, :ptr, :bool], :bool
+    attach_pfunc :ReadFile, [:handle, :buffer_out, :dword, :ptr, :ptr], :bool
+    attach_pfunc :WaitForSingleObject, [:handle, :dword], :dword
+    attach_pfunc :WaitNamedPipe, :WaitNamedPipeA, [:str, :dword], :bool
+    attach_pfunc :WriteFile, [:handle, :buffer_in, :dword, :ptr, :ptr], :bool
   end
 end

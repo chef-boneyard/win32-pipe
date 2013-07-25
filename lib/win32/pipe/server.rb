@@ -64,7 +64,7 @@ module Win32
             unless SetEvent(@event)
               raise Error, get_last_error(error)
             end
-          when ERROR_PIPE_LISTENING
+          when ERROR_PIPE_LISTENING, ERROR_SUCCESS
             # Do nothing
           else
             raise Error, get_last_error(error)

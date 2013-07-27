@@ -1,3 +1,8 @@
+== 0.3.2 - 27-Jul-2013
+* Don't raise an error if GetLastError returns ERROR_SUCCESS in server. Thanks
+  to go Ben Jansen for the patch.
+* Fixed error checking bug in client.
+
 == 0.3.1 - 8-Apr-2013
 * Fixed the HANDLE protype declarations in the underlying FFI code. This
   addresses a bug in 64 bit versions of Ruby.

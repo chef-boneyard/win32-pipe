@@ -33,6 +33,12 @@
   for the traditional "piping data to a server" usage. And if you come up
   with anything cool, please let us all know!
 
+== Contributions
+  Although this library is free, please consider having your company
+  setup a gittip if used by your company professionally.
+
+  http://www.gittip.com/djberg96/
+
 == Future Plans
   Add transactions
 
@@ -45,7 +51,7 @@
   warranties of merchantability and fitness for a particular purpose.
 
 == Copyright
-  (C) 2003-2012, Daniel J. Berger, All Rights Reserved.
+  (C) 2003-2013, Daniel J. Berger, All Rights Reserved.
 
 == Authors
   Daniel Berger

@@ -40,11 +40,11 @@ module Win32
         0
       )
 
-      error = GetLastError()
+      error = FFI.errno
 
       if error == ERROR_PIPE_BUSY
         unless WaitNamedPipe(@name, NMPWAIT_WAIT_FOREVER)
-          raise SystemCallError.new("WaitNamedPipe", FFI.errno)
+          raise SystemCallError.new("WaitNamedPipe", error)
         end
       end
 

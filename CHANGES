@@ -1,3 +1,7 @@
+== 0.3.3 - 21-Oct-2013
+* Fixed INVALID_HANDLE_VALUE for 64-bit Ruby.
+* Now internally uses a struct for OVERLAPPED event instead of packed string.
+
 == 0.3.2 - 27-Jul-2013
 * Don't raise an error if GetLastError returns ERROR_SUCCESS in server. Thanks
   to go Ben Jansen for the patch.

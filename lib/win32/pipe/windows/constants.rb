@@ -1,5 +1,9 @@
+require 'ffi'
+
 module Windows
   module Constants
+    include FFI::Library
+
     PIPE_WAIT             = 0x00000000
     PIPE_NOWAIT           = 0x00000001
     PIPE_ACCESS_INBOUND   = 0x00000001
@@ -20,7 +24,6 @@ module Windows
     FILE_ATTRIBUTE_NORMAL        = 0x00000080
 
     INFINITE = 0xFFFFFFFF
-    INVALID_HANDLE_VALUE = 0xFFFFFFFF
     NMPWAIT_WAIT_FOREVER = 0xFFFFFFFF
     ERROR_PIPE_BUSY = 231
     ERROR_IO_PENDING = 997
@@ -33,5 +36,7 @@ module Windows
     FILE_SHARE_READ  = 1
     FILE_SHARE_WRITE = 2
     OPEN_EXISTING    = 3
+
+    INVALID_HANDLE_VALUE = FFI::Pointer.new(-1).address
   end
 end

@@ -1,5 +1,6 @@
 require File.join(File.dirname(__FILE__), 'pipe', 'windows', 'constants')
 require File.join(File.dirname(__FILE__), 'pipe', 'windows', 'functions')
+require File.join(File.dirname(__FILE__), 'pipe', 'windows', 'structs')
 
 # The Win32 module serves as a namespace only.
 module Win32
@@ -9,12 +10,13 @@ module Win32
   class Pipe
     include Windows::Constants
     include Windows::Functions
+    include Windows::Structs
 
     # Error raised when anything other than a SystemCallError occurs.
     class Error < StandardError; end
 
     # The version of this library
-    VERSION = '0.3.2'
+    VERSION = '0.3.3'
 
     PIPE_BUFFER_SIZE = 512 #:nodoc:
     PIPE_TIMEOUT = 5000    #:nodoc:
@@ -98,7 +100,7 @@ module Win32
       @pending_io   = false
       @buffer       = 0.chr * PIPE_BUFFER_SIZE
       @size         = 0
-      @overlapped   = 0.chr * 20 # sizeof(OVERLAPPED)
+      @overlapped   = Overlapped.new
       @transferred  = 0
       @asynchronous = false
 
@@ -108,7 +110,7 @@ module Win32
 
       if @asynchronous
         @event = CreateEvent(nil, true, true, nil)
-        @overlapped[16, 4] = [@event].pack('L')
+        @overlapped[:hEvent] = @event
       end
     end
 

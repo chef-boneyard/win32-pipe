@@ -27,8 +27,8 @@ module Win32
     #     puts "Got [#{data}] back from pipe server"
     #  end
     #
-    def initialize(name, pipe_mode = DEFAULT_PIPE_MODE, open_mode = DEFAULT_OPEN_MODE)
-      super(name, pipe_mode, open_mode)
+    def initialize(name, pipe_mode = DEFAULT_PIPE_MODE, open_mode = DEFAULT_OPEN_MODE, pipe_buffer_size = DEFAULT_PIPE_BUFFER_SIZE)
+      super(name, pipe_mode, open_mode, pipe_buffer_size)
 
       @pipe = CreateFile(
         @name,

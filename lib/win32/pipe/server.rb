@@ -14,22 +14,22 @@ module Win32
     #--
     # The default pipe_mode also happens to be 0.
     #
-    def initialize(name, pipe_mode = 0, open_mode = Pipe::ACCESS_DUPLEX)
-      super(name, pipe_mode, open_mode)
+    def initialize(name, pipe_mode = 0, open_mode = Pipe::ACCESS_DUPLEX, pipe_buffer_size = DEFAULT_PIPE_BUFFER_SIZE)
+      super(name, pipe_mode, open_mode, pipe_buffer_size)
 
       @pipe = CreateNamedPipe(
         @name,
         @open_mode,
         @pipe_mode,
         PIPE_UNLIMITED_INSTANCES,
-        PIPE_BUFFER_SIZE,
-        PIPE_BUFFER_SIZE,
+        pipe_buffer_size,
+        pipe_buffer_size,
         PIPE_TIMEOUT,
         nil
       )
 
       if @pipe == INVALID_HANDLE_VALUE
-        raise
+        raise SystemCallError.new("CreateNamedPipe", FFI.errno)
       end
 
       if block_given?

@@ -18,7 +18,7 @@ module Win32
     # The version of this library
     VERSION = '0.3.3'
 
-    PIPE_BUFFER_SIZE = 512 #:nodoc:
+    DEFAULT_PIPE_BUFFER_SIZE = 4096 #:nodoc:
     PIPE_TIMEOUT = 5000    #:nodoc:
 
     # Blocking mode is enabled
@@ -59,7 +59,7 @@ module Win32
     OVERLAPPED = FILE_FLAG_OVERLAPPED
 
     # The default pipe mode
-    DEFAULT_PIPE_MODE = NOWAIT
+    DEFAULT_PIPE_MODE = PIPE_WAIT
 
     # The default open mode
     DEFAULT_OPEN_MODE = FILE_ATTRIBUTE_NORMAL | FILE_FLAG_WRITE_THROUGH
@@ -90,7 +90,7 @@ module Win32
     #
     # The default open mode is FILE_ATTRIBUTE_NORMAL | FILE_FLAG_WRITE_THROUGH.
     #
-    def initialize(name, pipe_mode = DEFAULT_PIPE_MODE, open_mode = DEFAULT_OPEN_MODE)
+    def initialize(name, pipe_mode = DEFAULT_PIPE_MODE, open_mode = DEFAULT_OPEN_MODE, pipe_buffer_size = DEFAULT_PIPE_BUFFER_SIZE)
       @name = "\\\\.\\pipe\\" + name
 
       @pipe_mode = pipe_mode.nil? ? DEFAULT_PIPE_MODE : pipe_mode
@@ -98,11 +98,13 @@ module Win32
 
       @pipe         = nil
       @pending_io   = false
-      @buffer       = 0.chr * PIPE_BUFFER_SIZE
+      @buffer       = ''
+      @ffi_buffer   = FFI::Buffer.new( pipe_buffer_size )
       @size         = 0
-      @overlapped   = Overlapped.new
+      @overlapped   = nil
       @transferred  = 0
       @asynchronous = false
+      @pipe_buffer_size = pipe_buffer_size
 
       if open_mode & FILE_FLAG_OVERLAPPED > 0
         @asynchronous = true
@@ -110,6 +112,7 @@ module Win32
 
       if @asynchronous
         @event = CreateEvent(nil, true, true, nil)
+        @overlapped = Overlapped.new
         @overlapped[:hEvent] = @event
       end
     end
@@ -142,22 +145,20 @@ module Win32
     #
     def read
       bytes = FFI::MemoryPointer.new(:ulong)
-      @buffer = 0.chr * PIPE_BUFFER_SIZE
 
       raise Error, "no pipe created" unless @pipe
 
       if @asynchronous
-        bool = ReadFile(@pipe, @buffer, @buffer.size, bytes, @overlapped)
-        error = GetLastError()
-
+        bool = ReadFile(@pipe, @ffi_buffer, @ffi_buffer.size, bytes, @overlapped)
         bytes_read = bytes.read_ulong
 
         if bool && bytes_read > 0
           @pending_io = false
-          @buffer = @buffer[0, bytes_read]
+          @buffer = @ffi_buffer.get_string(0, bytes_read)
           return true
         end
 
+        error = GetLastError()
         if !bool && error == ERROR_IO_PENDING
           @pending_io = true
           return true
@@ -165,28 +166,24 @@ module Win32
 
         return false
       else
-        unless ReadFile(@pipe, @buffer, @buffer.size, bytes, nil)
+        unless ReadFile(@pipe, @ffi_buffer, @ffi_buffer.size, bytes, nil)
           raise SystemCallError.new("ReadFile", FFI.errno)
         end
+        @buffer = @ffi_buffer.get_string(0, bytes.read_ulong)
       end
-
-      @buffer.unpack("A*")
     end
 
     # Writes 'data' to the pipe. You can write data to either end of a
     # named pipe.
     #
     def write(data)
-      @buffer = data
       @size   = data.size
       bytes   = FFI::MemoryPointer.new(:ulong)
 
       raise Error, "no pipe created" unless @pipe
 
       if @asynchronous
-        bool = WriteFile(@pipe, @buffer, @buffer.size, bytes, @overlapped)
-        error = GetLastError()
-
+        bool = WriteFile(@pipe, @data, @data.size, bytes, @overlapped)
         bytes_written = bytes.read_ulong
 
         if bool && bytes_written > 0
@@ -194,6 +191,7 @@ module Win32
           return true
         end
 
+        error = GetLastError()
         if !bool && error == ERROR_IO_PENDING
           @pending_io = true
           return true
@@ -201,7 +199,7 @@ module Win32
 
         return false
       else
-        unless WriteFile(@pipe, @buffer, @buffer.size, bytes, nil)
+        unless WriteFile(@pipe, data, data.size, bytes, nil)
           raise SystemCallError.new("WriteFile", FFI.errno)
         end
 
@@ -239,7 +237,7 @@ module Win32
         end
 
         @transferred = transferred.read_ulong
-        @buffer = @buffer[0, @transferred]
+        @buffer = @ffi_buffer.get_string(0, @transferred)
       end
 
       self

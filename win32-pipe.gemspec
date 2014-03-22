@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
 	spec.name       = 'win32-pipe'
-	spec.version    = '0.3.3'
+	spec.version    = '0.3.4'
 	spec.author     = 'Daniel J. Berger'
   spec.license    = 'Artistic 2.0'
 	spec.email      = 'djberg96@gmail.com'
@@ -15,6 +15,7 @@ Gem::Specification.new do |spec|
 	spec.extra_rdoc_files  = ['CHANGES', 'README', 'MANIFEST']
 	
 	spec.add_dependency('ffi')
+	spec.add_dependency('rake')
   spec.add_development_dependency('test-unit')
 	
 	spec.description = <<-EOF

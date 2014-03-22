@@ -1,4 +1,4 @@
-== 0.3.4 - ???
+== 0.3.4 - 22-Mar-2014
 * Modified the constructor to allow a fourth argument that lets you set the
   buffer size used by pipes. The default size has been increased to 4k.
 * Use a bonafide FFI::Buffer, and re-use it instead of creating a new buffer

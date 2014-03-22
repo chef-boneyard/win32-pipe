@@ -1,3 +1,11 @@
+== 0.3.4 - ???
+* Modified the constructor to allow a fourth argument that lets you set the
+  buffer size used by pipes. The default size has been increased to 4k.
+* Use a bonafide FFI::Buffer, and re-use it instead of creating a new buffer
+  for each read/write operation.
+* Thanks go to lionelperrin for the above updates.
+* Added Rake as a development dependency.
+
 == 0.3.3 - 21-Oct-2013
 * Fixed INVALID_HANDLE_VALUE for 64-bit Ruby.
 * Now internally uses a struct for OVERLAPPED event instead of packed string.

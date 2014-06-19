@@ -14,7 +14,7 @@ class TC_Win32_Pipe < Test::Unit::TestCase
   end
 
   test "version is set to expected value" do
-    assert_equal('0.3.4', Pipe::VERSION)
+    assert_equal('0.3.5', Pipe::VERSION)
   end
 
   test "name method basic functionality" do

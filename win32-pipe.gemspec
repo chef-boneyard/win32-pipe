@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
 	spec.name       = 'win32-pipe'
-	spec.version    = '0.3.4'
+	spec.version    = '0.3.5'
 	spec.author     = 'Daniel J. Berger'
   spec.license    = 'Artistic 2.0'
 	spec.email      = 'djberg96@gmail.com'
@@ -11,7 +11,6 @@ Gem::Specification.new do |spec|
 	spec.test_files = Dir['test/test_*.rb']
   spec.files      = Dir['**/*'].reject{ |f| f.include?('git') }
 
-	spec.rubyforge_project = 'win32utils'
 	spec.extra_rdoc_files  = ['CHANGES', 'README', 'MANIFEST']
 	
 	spec.add_dependency('ffi')

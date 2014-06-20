@@ -1,6 +1,7 @@
-== 0.3.5 - 18-Jun-2014
+== 0.3.5 - 19-Jun-2014
 * Added some missing constants that affected the async server.
 * Removed rubyforge_project from gemspec.
+* Added Rake as a development dependency.
 
 == 0.3.4 - 22-Mar-2014
 * Modified the constructor to allow a fourth argument that lets you set the

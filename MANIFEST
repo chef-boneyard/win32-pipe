@@ -3,10 +3,12 @@
 * CHANGES
 * Rakefile
 * win32-pipe.gemspec
+* certs/djberg96_pub.pem
 * examples/example_server.rb
 * examples/example_server_async.rb
 * examples/example_client.rb
 * examples/example_client_async.rb
+* lib/win32-pipe.rb
 * lib/win32/pipe.rb
 * lib/win32/pipe/client.rb
 * lib/win32/pipe/server.rb

@@ -2,7 +2,7 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
 	spec.name       = 'win32-pipe'
-	spec.version    = '0.3.5'
+	spec.version    = '0.3.6'
 	spec.author     = 'Daniel J. Berger'
   spec.license    = 'Artistic 2.0'
 	spec.email      = 'djberg96@gmail.com'
@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
 	spec.summary    = 'An interface for named pipes on MS Windows' 
 	spec.test_files = Dir['test/test_*.rb']
   spec.files      = Dir['**/*'].reject{ |f| f.include?('git') }
+  spec.cert_chain = ['certs/djberg96_pub.pem']
 
 	spec.extra_rdoc_files  = ['CHANGES', 'README', 'MANIFEST']
 	

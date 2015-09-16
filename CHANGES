@@ -1,3 +1,8 @@
+== 0.3.6 - 15-Sep-2015
+* This gem is now signed.
+* Added a win32-pipe.rb file for your convenience.
+* The Rakefile now assumes Rubygems 2.x.
+
 == 0.3.5 - 19-Jun-2014
 * Added some missing constants that affected the async server.
 * Removed rubyforge_project from gemspec.

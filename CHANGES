@@ -1,6 +1,7 @@
 == 0.3.7 - 24-Nov-2015
 * Fixed two function prototypes where I mistakenly specified :bool instead
   of :int, and updated the underlying code to match.
+* Fixed the asynchronous write method.
 
 == 0.3.6 - 15-Sep-2015
 * This gem is now signed.

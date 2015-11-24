@@ -177,13 +177,12 @@ module Win32
     # named pipe.
     #
     def write(data)
-      @size   = data.size
-      bytes   = FFI::MemoryPointer.new(:ulong)
+      bytes = FFI::MemoryPointer.new(:ulong)
 
       raise Error, "no pipe created" unless @pipe
 
       if @asynchronous
-        bool = WriteFile(@pipe, @data, @data.size, bytes, @overlapped)
+        bool = WriteFile(@pipe, data, data.size, bytes, @overlapped)
         bytes_written = bytes.read_ulong
 
         if bool && bytes_written > 0

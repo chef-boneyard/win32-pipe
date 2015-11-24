@@ -21,14 +21,14 @@ module Windows
 
     attach_pfunc :CloseHandle, [:handle], :bool
     attach_pfunc :ConnectNamedPipe, [:handle, :ptr], :bool
-    attach_pfunc :CreateEvent, :CreateEventA, [:ptr, :bool, :bool, :str], :handle
+    attach_pfunc :CreateEvent, :CreateEventA, [:ptr, :int, :int, :str], :handle
     attach_pfunc :CreateFile, :CreateFileA, [:str, :dword, :dword, :ptr, :dword, :dword, :handle], :handle
     attach_pfunc :CreateNamedPipe, :CreateNamedPipeA, [:str, :dword, :dword, :dword, :dword, :dword, :dword, :ptr], :handle
     attach_pfunc :CreatePipe, [:ptr, :ptr, :ptr, :dword], :bool
     attach_pfunc :DisconnectNamedPipe, [:handle], :bool
     attach_pfunc :FlushFileBuffers, [:handle], :bool
     attach_pfunc :GetLastError, [], :dword
-    attach_pfunc :GetOverlappedResult, [:handle, :ptr, :ptr, :bool], :bool
+    attach_pfunc :GetOverlappedResult, [:handle, :ptr, :ptr, :int], :bool
     attach_pfunc :ReadFile, [:handle, :buffer_out, :dword, :ptr, :ptr], :bool
     attach_pfunc :WaitForSingleObject, [:handle, :dword], :dword
     attach_pfunc :WaitNamedPipe, :WaitNamedPipeA, [:str, :dword], :bool

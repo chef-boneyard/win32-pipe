@@ -16,7 +16,7 @@ module Win32
     class Error < StandardError; end
 
     # The version of this library
-    VERSION = '0.3.6'
+    VERSION = '0.3.7'
 
     DEFAULT_PIPE_BUFFER_SIZE = 4096 #:nodoc:
     PIPE_TIMEOUT = 5000    #:nodoc:
@@ -111,7 +111,7 @@ module Win32
       end
 
       if @asynchronous
-        @event = CreateEvent(nil, true, true, nil)
+        @event = CreateEvent(nil, 1, 1, nil)
         @overlapped = Overlapped.new
         @overlapped[:hEvent] = @event
       end
@@ -230,7 +230,7 @@ module Win32
 
       if @pending_io
         transferred = FFI::MemoryPointer.new(:ulong)
-        bool = GetOverlappedResult(@pipe, @overlapped, transferred, false)
+        bool = GetOverlappedResult(@pipe, @overlapped, transferred, 0)
 
         unless bool
           raise SystemCallError.new("GetOverlappedResult", FFI.errno)

@@ -143,13 +143,13 @@ module Win32
     # Reads data from the pipe. You can read data from either end of a named
     # pipe.
     #
-    def read
+    def read(read_size = @ffi_buffer.size)
       bytes = FFI::MemoryPointer.new(:ulong)
 
       raise Error, "no pipe created" unless @pipe
 
       if @asynchronous
-        bool = ReadFile(@pipe, @ffi_buffer, @ffi_buffer.size, bytes, @overlapped)
+        bool = ReadFile(@pipe, @ffi_buffer, read_size, bytes, @overlapped)
         bytes_read = bytes.read_ulong
 
         if bool && bytes_read > 0
@@ -166,7 +166,7 @@ module Win32
 
         return false
       else
-        unless ReadFile(@pipe, @ffi_buffer, @ffi_buffer.size, bytes, nil)
+        unless ReadFile(@pipe, @ffi_buffer, read_size, bytes, nil)
           raise SystemCallError.new("ReadFile", FFI.errno)
         end
         @buffer = @ffi_buffer.get_string(0, bytes.read_ulong)

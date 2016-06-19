@@ -1,3 +1,8 @@
+== 0.4.0 - 19-Jun-2016
+* License changed to Apache 2.0.
+* The Pipe#read method now accepts an optional length. Thanks go to
+  Ritta Narita for the patch.
+
 == 0.3.7 - 24-Nov-2015
 * Fixed two function prototypes where I mistakenly specified :bool instead
   of :int, and updated the underlying code to match.

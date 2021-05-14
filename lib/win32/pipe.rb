@@ -182,7 +182,7 @@ module Win32
       raise Error, "no pipe created" unless @pipe
 
       if @asynchronous
-        bool = WriteFile(@pipe, data, data.size, bytes, @overlapped)
+        bool = WriteFile(@pipe, data, data.bytesize, bytes, @overlapped)
         bytes_written = bytes.read_ulong
 
         if bool && bytes_written > 0
@@ -198,7 +198,7 @@ module Win32
 
         return false
       else
-        unless WriteFile(@pipe, data, data.size, bytes, nil)
+        unless WriteFile(@pipe, data, data.bytesize, bytes, nil)
           raise SystemCallError.new("WriteFile", FFI.errno)
         end
 
